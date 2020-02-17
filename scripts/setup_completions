@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import os
+import shutil
+
+cmd = 'tool'
+plugin = cmd + '.plugin.zsh'
+home = os.environ.get('HOME')
+zsh_cfg = os.path.join(home, '.oh-my-zsh')
+
+if os.path.exists(zsh_cfg):
+    completion_path = os.path.join(zsh_cfg, 'custom/plugins', cmd)
+    if not os.path.exists(completion_path):
+        os.mkdir(completion_path)
+        print(f'mkdir {completion_path}')
+
+    if not os.path.exists(plugin):
+        print(f'Unable to locate {plugin}')
+        exit(1)
+
+    completion_cfg_path = os.path.join(completion_path, plugin)
+    shutil.copy(plugin, completion_cfg_path)
+    print(f'cp {plugin} {completion_cfg_path}')
+    print(f'Please update {home}/.zshrc with:\nplugins=(\n  {cmd}\n)')
