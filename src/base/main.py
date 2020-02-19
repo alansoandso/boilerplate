@@ -10,8 +10,6 @@ logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 def get_parser():
     parser = argparse.ArgumentParser(description='tool')
-    parser.add_argument('--collections', action='store_true', default=False, help='Find collections in the catalogue')
-    parser.add_argument('--movies', action='store_true', default=False, help='Find playable movies in the catalogue')
     parser.add_argument('--env', action='store', default='quality', help='Set for (integration or production)')
     parser.add_argument('-l', '--list', action='store_true', default=False, help='List all for completion helper')
     parser.add_argument('-v', '--verbose', action='store_true', default=False, help='verbose')
@@ -36,25 +34,17 @@ def command_line_runner(argv=None):
 
     # List all
     if args.list:
-        print('Boots to Kingston(E)\nStanley Rd to Twickenham(Q)')
-        return
-
-    # Find collections
-    if args.collections:
-        return
-
-    # Find movies
-    if args.movies:
+        print('Kingston\nTwickenham')
         return
 
     # Do something with this asset
     if args.asset:
-        print(f'Using: {args.asset}')
-        # Broad St
-        # print('For 281 & 33 deduct 2 mins')
-        stop = '490004377E'
-        # Teddington Hospital Stanley Rd
-        stop = '490013176S'
+        if args.asset[0] == 'Twickenham':
+            print(f'Going to :{args.asset}, from: Teddington Hospital Stanley Rd (Stop Q)')
+            stop = '490013176S'
+        else:
+            print(f'Going to :{args.asset}, from: Broad St Stop(E) - For 281 & 33 deduct 2 mins')
+            stop = '490004377E'
         arrivals = requests.get('https://api.tfl.gov.uk/StopPoint/' + stop + '/Arrivals').json()
         for bus in arrivals:
             print('Number     : {}'.format(bus.get('lineName')))
