@@ -13,12 +13,11 @@ setup(name='tool',
       description='Sonething tool to display',
       author='Alan So',
       author_email='alansoandso@gmail.com',
-      packages=find_packages('src'),
-      package_dir={'': 'src'},
-      py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
+      packages=['package'],
+      include_package_data=True,
+      entry_points={'console_scripts': ['tool = package.tool:command_line_runner', ]},
       # package_data={'pkg': ['pkg_data.yaml']},
       # include_package_data=True,
-      entry_points={'console_scripts': ['tool = base.main:command_line_runner', ]},
       install_requires=install_requires
       )
 

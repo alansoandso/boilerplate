@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from base import main as tool
+import package.tool as tool
 
 
 @patch('sys.argv', ['tool'])
